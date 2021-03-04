@@ -15,7 +15,9 @@ mongoose.connect(process.env.MONGO_URI,{
   useCreateIndex:true
 
 }).then(()=>console.log(`mongoDb connected`))
-.catch(err=>console.log(err));
+  .catch(err=>{
+    next(err)
+  });
 //body-parser
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -28,6 +30,7 @@ app.use('/users',users)
 const books=require('./routes/books');
 app.use('/books',books)
 const genres=require('./routes/genres');
+const { nextTick } = require('process');
 app.use('/genres',genres)
 
 
